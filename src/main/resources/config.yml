@@ -1,0 +1,5 @@
+# Score tag format
+# Placeholders from PlaceholderAPI available
+tag: "%player_health%"
+# Score tag update delay in ticks (20 ticks = 1 second)
+update: 10
