@@ -16,7 +16,7 @@ public class TagUpdater extends Thread {
     @Override
     public void run() {
         for (Player p : plugin.getServer().getOnlinePlayers().values()) {
-            p.setScoreTag(PlaceholderAPI.getInstance().translateString(plugin.config.getString("tag"), p));
+            p.setScoreTag(PlaceholderAPI.getInstance().translateString(plugin.config.getString("tag").replace("%factions_name%", plugin.getFaction(p)), p));
         }
     }
 }
