@@ -31,7 +31,7 @@ public class Main extends PluginBase {
             case 2:
                 return "iOS";
             case 3:
-                return "Mac";
+                return "macOS";
             case 4:
                 return "Fire";
             case 5:
@@ -49,7 +49,7 @@ public class Main extends PluginBase {
             case 11:
                 return "PlayStation";
             case 12:
-                return "NX";
+                return "Switch";
             case 13:
                 return "Xbox";
             default:
