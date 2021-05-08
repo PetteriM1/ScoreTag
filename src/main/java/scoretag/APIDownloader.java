@@ -11,23 +11,44 @@ public class APIDownloader {
     public static void checkAndRun(Main plugin) {
         Server server = plugin.getServer();
 
-        if (server.getPluginManager().getPlugin("PlaceholderAPI") != null) return;
+        if (server.getPluginManager().getPlugin("KotlinLib") == null) {
+            plugin.getLogger().info("Downloading KotlinLib...");
 
-        plugin.getLogger().info("Downloading PlaceholderAPI...");
+            String placeholderApi = server.getFilePath() + "/plugins/KotlinLib.jar";
 
-        String placeholderApi = server.getFilePath() + "/plugins/PlaceholderAPI.jar";
+            try {
+                FileOutputStream fos = new FileOutputStream(placeholderApi);
+                fos.getChannel().transferFrom(Channels.newChannel(new URL("https://dl.dropboxusercontent.com/s/6rmogms1458p369/KotlinLib.jar").openStream()), 0, Long.MAX_VALUE);
+                fos.close();
+            } catch (Exception e) {
+                plugin.getLogger().info("Failed to download KotlinLib!");
+                server.getLogger().logException(e);
+                server.getPluginManager().disablePlugin(plugin);
+                return;
+            }
 
-        try {
-            FileOutputStream fos = new FileOutputStream(placeholderApi);
-            fos.getChannel().transferFrom(Channels.newChannel(new URL("https://sites.google.com/site/downloadcenterpetterim1/PlaceholderAPI.jar").openStream()), 0, Long.MAX_VALUE);
-            fos.close();
-        } catch (Exception e) {
-            server.getLogger().logException(e);
-            server.getPluginManager().disablePlugin(plugin);
-            return;
+            plugin.getLogger().info("PlaceholderAPI downloaded successfully");
+            server.getPluginManager().loadPlugin(placeholderApi);
         }
 
-        plugin.getLogger().info("PlaceholderAPI downloaded successfully");
-        server.getPluginManager().loadPlugin(placeholderApi);
+        if (server.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            plugin.getLogger().info("Downloading PlaceholderAPI...");
+
+            String placeholderApi = server.getFilePath() + "/plugins/PlaceholderAPI.jar";
+
+            try {
+                FileOutputStream fos = new FileOutputStream(placeholderApi);
+                fos.getChannel().transferFrom(Channels.newChannel(new URL("https://dl.dropboxusercontent.com/s/b5qvtaugosf54am/PlaceholderAPI.jar").openStream()), 0, Long.MAX_VALUE);
+                fos.close();
+            } catch (Exception e) {
+                plugin.getLogger().info("Failed to download PlaceholderAPI!");
+                server.getLogger().logException(e);
+                server.getPluginManager().disablePlugin(plugin);
+                return;
+            }
+
+            plugin.getLogger().info("PlaceholderAPI downloaded successfully");
+            server.getPluginManager().loadPlugin(placeholderApi);
+        }
     }
 }

@@ -6,12 +6,21 @@ import cn.nukkit.utils.Config;
 
 public class Main extends PluginBase {
 
-    public Config config;
+    String tag;
+    Class<?> placeholderAPI;
 
     public void onEnable() {
         saveDefaultConfig();
-        config = getConfig();
+        Config config = getConfig();
+        tag = config.getString("tag");
         APIDownloader.checkAndRun(this);
+        try {
+            placeholderAPI = Class.forName("com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI");
+        } catch (Exception e) {
+            getLogger().critical("Error with PlaceholderAPI", e);
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         getServer().getScheduler().scheduleDelayedRepeatingTask(this, new TagUpdater(this), config.getInt("update"), config.getInt("update"));
     }
 
@@ -52,6 +61,8 @@ public class Main extends PluginBase {
                 return "Switch";
             case 13:
                 return "Xbox";
+            case 14:
+                return "Windows Phone";
             default:
                 return "Unknown";
         }

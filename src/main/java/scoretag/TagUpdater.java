@@ -4,22 +4,26 @@ import cn.nukkit.Player;
 
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 
-public class TagUpdater extends Thread {
+public class TagUpdater implements Runnable {
 
-    private Main plugin;
+    private final Main plugin;
 
     public TagUpdater(Main plugin) {
         this.plugin = plugin;
-        setName("TagUpdater");
     }
 
     @Override
     public void run() {
-        for (Player p : plugin.getServer().getOnlinePlayers().values()) {
-            String tag = PlaceholderAPI.getInstance().translateString(plugin.config.getString("tag").replace("%factions_name%", plugin.getFaction(p)).replace("%device_os%", plugin.getOS(p)), p);
-            if (!p.getScoreTag().equals(tag)) {
-                p.setScoreTag(tag);
+        try {
+            for (Player p : plugin.getServer().getOnlinePlayers().values()) {
+                String tag = (String) plugin.placeholderAPI.getDeclaredMethod("translateString", String.class, Player.class).invoke(PlaceholderAPI.getInstance(),
+                        plugin.tag.replace("%factions_name%", plugin.getFaction(p)).replace("%device_os%", plugin.getOS(p)), p);
+                if (!p.getScoreTag().equals(tag)) {
+                    p.setScoreTag(tag);
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
