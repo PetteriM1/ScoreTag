@@ -3,19 +3,21 @@ package scoretag;
 import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
+import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 
 public class Main extends PluginBase {
 
     String tag;
-    Class<?> placeholderAPI;
+    static PlaceholderAPI api = null;
 
     public void onEnable() {
         saveDefaultConfig();
         Config config = getConfig();
         tag = config.getString("tag");
         APIDownloader.checkAndRun(this);
+
         try {
-            placeholderAPI = Class.forName("com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI");
+            api = PlaceholderAPI.getInstance();
         } catch (Exception e) {
             getLogger().critical("Error with PlaceholderAPI", e);
             getServer().getPluginManager().disablePlugin(this);
