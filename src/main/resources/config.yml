@@ -1,5 +1,7 @@
 # Score tag format
 # Placeholders from PlaceholderAPI available
-tag: "%player_health%"
+# Extra placeholders: device_os, factions_name, total_health
+tag: "%total_health% §c❤"
+
 # Score tag update delay in ticks (20 ticks = 1 second)
-update: 10
+update: 5

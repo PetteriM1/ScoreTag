@@ -1,6 +1,6 @@
 name: ScoreTag
 main: scoretag.Main
 version: "${pom.version}"
-api: ["1.0.7"]
+api: ["1.1.0"]
 author: PetteriM1
 softdepend: ["PlaceholderAPI"]
